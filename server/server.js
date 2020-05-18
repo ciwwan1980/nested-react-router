@@ -1,6 +1,8 @@
 const express=require("express")
 const fs=require("fs")
+const cors=require("cors")
 const app=express()
+app.use(cors({origin:"*"}))
 
 app.get("/product",(req,res)=>{
 let data=fs.readFileSync(__dirname+ "/data/products.json", "utf-8")
