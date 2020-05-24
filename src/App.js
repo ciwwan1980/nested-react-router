@@ -4,9 +4,26 @@ import {BrowserRouter as Router, Route,Switch } from "react-router-dom"
 import './App.css';
 import Home from "./components/Home"
 
+
 class App extends React.Component {
 
+state={
+    Data:[]
+}
 
+componentDidMount(){
+this.fetchData()
+}
+
+fetchData=async()=>{
+    let response= await fetch("http://localhost:3001/product")
+    let data= await response.json()
+    console.log(data, "data")
+    this.setState({
+        Data:data
+    })
+
+}
   render() {
     return (
       <Router>
@@ -16,17 +33,15 @@ class App extends React.Component {
 
           <Switch>
 
-    <Route path="/" component={Home} />
-    
+    <Route exact path="/" render={(props)=><Home {...props} data={this.state.Data}/>} />
+   
           </Switch>
         </div>
       </Router>
     );
   }
 }
-// component={Details}
+
 
 export default App;
 
-// <Route exact path="/products"  component={Product}/>
-//     <Route exact path="/products/:name" component={Details} />
